@@ -1,17 +1,6 @@
 import numpy as np
 
 
-def indexToTriple(t, k, h, w):
-    u = t / (h * w)
-    r = (t - u * h * w) / w
-    c = t % w
-    return (u, r, c)
-
-
-def tripleToIndex(u, r, c, h, w):
-    return u*h*w + r*w + c
-
-
 def findMaximumConsistencyPixels(S, W, w_r, w_c):
     K, e_h, e_w = S.shape
     t_h, t_w = W.shape
@@ -65,7 +54,7 @@ def structAwareSynthesize(S, W):
         cns_ts = [t0s]
         cnt_t_ids = [cnt_t_id]
 
-        # compute f_t using dynamic programming in updown order
+        # compute f_t using dynamic programming in up-down order
         # save cns_ts and cnt_t_ids for computing final ts
         for r in range(1, t_h):
             t1s = findMaximumConsistencyPixels(S, W, r, c)
@@ -81,12 +70,12 @@ def structAwareSynthesize(S, W):
                         f1_t[i] = f0_t[j] + gain
                         cnt_t_id[i] = j
 
-            cns_ts.append([t1s])
-            cnt_t_ids.append([cnt_t_id])
+            cns_ts.append(t1s)
+            cnt_t_ids.append(cnt_t_id)
             t0s = t1s
             f0_t = f1_t
 
-        # the maximum continutiy is the maximum one in f_t(s) in final row
+        # the maximum continutiy is the maximum one in f_t in final row
         t_id = 0
         max_cnt = f0_t[0]
         for i in range(0, len(f0_t)):
@@ -94,12 +83,14 @@ def structAwareSynthesize(S, W):
                 max_cnt = f0_t
                 t_id = i
 
-        # find the best ts by solving the maximum column continuity of the column in bottom up order
+        # find the best ts by solving the maximum column continuity of the column in bottom-up order
         order = range(0, t_h)
         order.reverse();
         for i in order:
             C[i, c] = cns_ts[i][t_id]
             t_id = cnt_t_ids[i][t_id]
+
+    return C
 
 
 if __name__ == '__main__':
