@@ -60,10 +60,64 @@ def pp(p):
 
 def test1():
     S = loadExamplarPattens()
-    W = S[2].copy()
+    a = np.random.rand(100).reshape(10,10)
+    W = a > 0.5
     
     C = structAwareSynthesize(S, W)
     return C
+
+
+def generateTwillSimple1(p, starts, up=True, val=True):
+    h, w = p.shape
+
+    if up:
+        offset = [-1, 1]
+    else:
+        offset = [1, 1]
+    
+    for (r, c) in starts:
+        rn = r
+        cn = c
+        while rn >= 0 and rn < h and cn >= 0 and cn < w:
+            p[rn, cn] = val
+            rn += offset[0]
+            cn += offset[1]
+
+
+def generteTwill1():
+    W = np.zeros((16, 16), dtype=np.bool)
+    
+    # left half
+    W[:, 0:8] = True
+    starts = [(0,0), (3, 0), (4, 0), (7, 0),
+              (8,0), (11, 0), (12, 0), (15, 0),
+              (15,1),(15,4),(15,5)]
+    generateTwillSimple1(W[:, 0:8], starts, up=True, val=False)
+    
+    W[:, 8:16] = True
+    starts = [(2,0),(3,0),(6,0),(7,0),(10,0),(11,0),(14,0),(15,0),
+              (0,1),(0,2),(0,5),(0,6)]
+    generateTwillSimple1(W[:, 8:16], starts, up=False, val=False)
+    
+    return W
+
+
+def test2():
+    S = loadExamplarPattens()
+    W = generteTwill1()
+    #W = np.tile(W, (1, 3))
+    C = structAwareSynthesize(S, W)
+    return C
+
+
+def pbyc(C):
+    S = loadExamplarPattens()
+    W = np.zeros((C.shape[0], C.shape[1]), dtype=np.bool)
+    for r in range(C.shape[0]):
+        for c in range(C.shape[1]):
+            W[r, c] = S[C[r,c,0],C[r,c,1],C[r,c,2]]
+
+    return W
 
 
 def indexToTriple(t, k, h, w):
@@ -73,7 +127,7 @@ def indexToTriple(t, k, h, w):
     return (u, r, c)
 
 
-def tripleToIndex(u, r, c, h, w):
+def tripleToIndex(u, r, c, h=5, w=5):
     return u*h*w + r*w + c
 
 
