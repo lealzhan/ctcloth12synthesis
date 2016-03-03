@@ -18,15 +18,18 @@ def setWeavePattern(res):
     offset = [-1, 3]
     generateSatinSimple(p2, starts, offset, True)
 
+    p1 = np.tile(p1, (4, 4))
+    p2 = np.tile(p2, (4, 4))
+
     # T: [p1 p2
     #     p2 p1]
-    T = np.zeros((32, 32), dtype=np.bool)
-    T[0:16, 0:16] = T[16:32, 16:32] = p1
-    T[0:16, 16:32] = T[16:32, 0:16] = p2
+    T = np.zeros((128, 128), dtype=np.bool)
+    T[0:64, 0:64] = T[64:128, 64:128] = p1
+    T[0:64, 64:128] = T[64:128, 0:64] = p2
 
     # tile pattern T up to xres * yres 
-    tile_x = (res[0] + 32) / 32
-    tile_y = (res[1] + 32) / 32
+    tile_x = (res[0] + 128) / 128
+    tile_y = (res[1] + 128) / 128
     P = np.tile(T, (tile_x, tile_y))
 
     return P[0:res[0], 0:res[1]]
@@ -58,15 +61,14 @@ if __name__ == '__main__':
     target_pattern = setWeavePattern(res)
     
     print 'synthesis ..'
-    C = structAwareSynthesize(examplars_pattern, target_pattern)
-    C = np.ones((res[0],res[1],3),dtype='int32')    
+    C = structAwareSynthesize(examplars_pattern, target_pattern) 
     print 'synthesis done.'
 
-    print '(checking)target pattern:'
-    printPattern(target_pattern)
-    target_pattern_syn = parsePattern(examplars_pattern, C)
-    print 'synthesis pattern:'
-    printPattern(target_pattern_syn)
+#    print '(checking)target pattern:'
+#    printPattern(target_pattern)
+#    target_pattern_syn = parsePattern(examplars_pattern, C)
+#    print 'synthesis pattern:'
+#    printPattern(target_pattern_syn)
 
     print 'genereate tileId and tileTransform ..'
     tileId = C[:,:,0]

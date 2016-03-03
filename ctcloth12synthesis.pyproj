@@ -5,7 +5,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{094156a4-8059-4c13-8630-afc2673e5b29}</ProjectGuid>
     <ProjectHome />
-    <StartupFile />
+    <StartupFile>example1.py</StartupFile>
     <SearchPath />
     <WorkingDirectory>.</WorkingDirectory>
     <OutputPath>.</OutputPath>
@@ -24,9 +24,7 @@
     <Compile Include="example1.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="io.py">
-      <SubType>Code</SubType>
-    </Compile>
+    <Compile Include="indiceio.py" />
     <Compile Include="synthesize.py">
       <SubType>Code</SubType>
     </Compile>
