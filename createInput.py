@@ -25,15 +25,15 @@ def createInputSimple(I, V, M, P):
         M_tile[i] = np.tile(M_i, ((h+h_i)/h_i, (w+w_i)/w_i))[0:h, 0:w]
 
     W = np.zeros_like(I, dtype=np.bool)
-    tileSpectrum = np.zeros_like(I, dtype='int32')
+    tileSpectrumMap = np.zeros_like(I, dtype='int32')
 
     for i in range(0, I.shape[0]):
         for j in range(0, I.shape[1]):
             id = P[I[i, j]]
             W[i, j] = V_tile[id, i, j]
-            tileSpectrum = M_tile[id, i, j]
+            tileSpectrumMap[i, j] = M_tile[id, i, j]
     
-    return (W, tileSpectrum)
+    return (W, tileSpectrumMap)
 
 
 if __name__ == '__main__':

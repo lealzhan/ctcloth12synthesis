@@ -57,6 +57,7 @@ if __name__ == '__main__':
     I = np.zeros_like(img, dtype='int32')
     I[img <= 0.5] = 0
     I[img > 0.5] = 1
+    I = I.swapaxes(0, 1)
 
     # set pattern mapping
     P = np.array([0, 1], dtype='int32')
