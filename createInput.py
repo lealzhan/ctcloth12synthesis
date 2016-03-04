@@ -29,7 +29,7 @@ def createInputSimple(I, V, M, P):
 
     for i in range(0, I.shape[0]):
         for j in range(0, I.shape[1]):
-            id = P[I(i, j)]
+            id = P[I[i, j]]
             W[i, j] = V_tile[id, i, j]
             tileSpectrum = M_tile[id, i, j]
     
