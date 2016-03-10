@@ -21,7 +21,7 @@ def setSpectrumMaps():
 def setElementaryPatternsAndMaps():
     # twill 1/7
     p1 = np.ones((8, 8), dtype=np.bool)
-    generateSatinSimple(p1, [(7, 0),], [-1, -1], False)
+    generateSatinSimple(p1, [(7, 0),], [-1, 1], False)
 
     map1 = np.zeros_like(p1, dtype='int32')
     for i in range(0, 8):
@@ -30,7 +30,7 @@ def setElementaryPatternsAndMaps():
 
     # satin 7/1
     p2 = np.zeros((8, 8), dtype=np.bool)
-    generateSatinSimple(p2, [(7,0),(4,1),(1,2)], [-1,-3], True)
+    generateSatinSimple(p2, [(7,0),(4,1),(1,2)], [-1,3], True)
 
     map2 = np.zeros_like(p2, dtype='int32')
     for i in range(0, 8):
@@ -57,7 +57,7 @@ if __name__ == '__main__':
     I = I.swapaxes(0, 1)
 
     # set pattern mapping
-    P = np.array([0, 1], dtype='int32')
+    P = np.array([1, 0], dtype='int32')
     W, tileSpectrumMap = createInputSimple(I, V, M, P)
     print 'create input done.'
 
@@ -95,7 +95,7 @@ if __name__ == '__main__':
 #    spectrumMaps = setSpectrumMaps() 
 #    tileSpectrumMap = setTileSpectrumMap(res)
 
-    filename = r'figure13c.dat'
+    filename = r'figure13c_round3_1.dat'
     print 'dump indices to file: ', filename
     aabb = np.zeros((2, 3), dtype='float32')
     aabb[0] = [0.0, 0.0, 0.0]

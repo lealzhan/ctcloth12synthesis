@@ -57,7 +57,7 @@ if __name__ == '__main__':
     block_extents = loadBlockExtents()
 
     print 'load target pattern ..'
-    res = [300, 300]
+    res = [900, 1500]
     target_pattern = setWeavePattern(res)
     
     print 'synthesis ..'
