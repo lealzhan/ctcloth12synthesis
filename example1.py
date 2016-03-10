@@ -18,18 +18,21 @@ def setWeavePattern(res):
     offset = [-1, 3]
     generateSatinSimple(p2, starts, offset, True)
 
-    p1 = np.tile(p1, (4, 4))
-    p2 = np.tile(p2, (4, 4))
+    p1 = np.tile(p1, (4, 7))
+    p1 = p1[0:60, 0:100]
+
+    p2 = np.tile(p2, (4, 7))
+    p2 = p2[0:60, 0:100]
 
     # T: [p1 p2
     #     p2 p1]
-    T = np.zeros((128, 128), dtype=np.bool)
-    T[0:64, 0:64] = T[64:128, 64:128] = p1
-    T[0:64, 64:128] = T[64:128, 0:64] = p2
+    T = np.zeros((120, 200), dtype=np.bool)
+    T[0:60, 0:100] = T[60:120, 100:200] = p1
+    T[0:60, 100:200] = T[60:120, 0:100] = p2
 
     # tile pattern T up to xres * yres 
-    tile_x = (res[0] + 128) / 128
-    tile_y = (res[1] + 128) / 128
+    tile_x = (res[0] + 120) / 120
+    tile_y = (res[1] + 200) / 200
     P = np.tile(T, (tile_x, tile_y))
 
     return P[0:res[0], 0:res[1]]

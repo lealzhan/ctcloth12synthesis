@@ -3,6 +3,7 @@ from utils import *
 from createInput import *
 from examplars import *
 from synthesize import structAwareSynthesize
+from indiceio import saveIndicesSimple
 
 
 def setSpectrumMaps():
