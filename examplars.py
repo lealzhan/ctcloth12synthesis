@@ -89,6 +89,17 @@ def loadExamplarsAABB():
     return aabb
 
 
+def loadExamplarsBaseTranslateXY():
+    xy = np.zeros((8, 2), dtype="float32")
+    xy[0] = [0.019781, 0.0]
+    xy[1] = [0.019751, 0.0]
+    xy[2] = [0.019759, 0.0]
+    xy[3] = [0.019716, 0.0]
+    xy[4] = xy[5] = xy[6] = xy[7] = [0.0, 0.0]  # satin
+
+    return xy
+
+
 def loadExamplarsTranslateZSimple():
     z = np.zeros((8,), dtype='float32')
 

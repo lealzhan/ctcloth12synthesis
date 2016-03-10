@@ -10,15 +10,12 @@ def setSpectrumMaps():
     spectrumMap1 = np.zeros((nitem1, 4), dtype='float32')
 
     for i in range(0, nitem1):
-        spectrumMap1[i] = [i+1, 0.850000, 0.850000, 0.010000] # golden yellow
+        if i < 11:
+            spectrumMap1[i] = [i+1, 0.850000, 0.850000, 0.010000] # golden yellow
+        else:
+            spectrumMap1[i] = [i+1, 0.850000, 0.010000, 0.010000] # red
 
-    nitem2 = 31
-    spectrumMap2 = np.zeros((nitem2, 4), dtype='float32')
-
-    for i in range(0, nitem2):
-        spectrumMap2[i] = [i+1, 0.850000, 0.010000, 0.010000] # red
-
-    return [spectrumMap1, spectrumMap2]
+    return [spectrumMap1,]
 
 
 def setElementaryPatternsAndMaps():
@@ -29,7 +26,7 @@ def setElementaryPatternsAndMaps():
     map1 = np.zeros_like(p1, dtype='int32')
     for i in range(0, 8):
         for j in range(0, 8):
-            map1[i, j] = int(p1[i, j])
+            map1[i, j] = 0
 
     # satin 7/1
     p2 = np.zeros((8, 8), dtype=np.bool)
@@ -38,7 +35,7 @@ def setElementaryPatternsAndMaps():
     map2 = np.zeros_like(p2, dtype='int32')
     for i in range(0, 8):
         for j in range(0, 8):
-            map2[i, j] = int(p2[i, j])
+            map2[i, j] = 0
 
     return [[p1, p2], [map1, map2]]
 
@@ -86,10 +83,12 @@ if __name__ == '__main__':
     print 'genereate tileId and tileTransform ..'
     tileId = C[:,:,0]
 
+    base = loadExamplarsBaseTranslateXY()
+
     tileTranslate = np.zeros((res[0], res[1], 3), dtype='float32')
     for i in range(0, res[0]):
         for j in range(0, res[1]):
-            tileTranslate[i,j,0:2] = examplarTranslate(examplars_aabb[C[i,j,0]][:,0:2], res, C[i,j,1:3])
+            tileTranslate[i,j,0:2] = examplarTranslate(examplars_aabb[C[i,j,0]][:,0:2], res, C[i,j,1:3]) + base[C[i,j,0]]
             tileTranslate[i,j,2] = examplars_tz[C[i,j,0]]
 
 #    print 'set spectrum maps and generate tile spectrum map ..'
