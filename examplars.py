@@ -117,6 +117,10 @@ def loadExamplarsTranslateZSimple():
 
 def loadBlockExtents():
     return [0.11352, 0.0691, 0.338];
+    
+
+def loadExamplarResolution():
+    return [5, 5]
 
 
 if __name__ == '__main__':

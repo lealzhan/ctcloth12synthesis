@@ -58,6 +58,7 @@ if __name__ == '__main__':
     examplars_aabb = loadExamplarsAABB()
     examplars_tz = loadExamplarsTranslateZSimple()
     block_extents = loadBlockExtents()
+    examplar_res = loadExamplarResolution()
 
     print 'load target pattern ..'
     res = [900, 1500]
@@ -81,7 +82,7 @@ if __name__ == '__main__':
     tileTranslate = np.zeros((res[0], res[1], 3), dtype='float32')
     for i in range(0, res[0]):
         for j in range(0, res[1]):
-            tileTranslate[i,j,0:2] = examplarTranslate(examplars_aabb[C[i,j,0]][:,0:2], res, C[i,j,1:3]) + base[C[i,j,0]]
+            tileTranslate[i,j,0:2] = examplarTranslate(examplars_aabb[C[i,j,0]][:,0:2], examplar_res, C[i,j,1:3]) + base[C[i,j,0]]
             tileTranslate[i,j,2] = examplars_tz[C[i,j,0]]
 
     print 'set spectrum maps and generate tile spectrum map ..'
