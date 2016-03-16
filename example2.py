@@ -86,12 +86,10 @@ if __name__ == '__main__':
     print 'genereate tileId and tileTransform ..'
     tileId = C[:,:,0]
 
-    base = loadExamplarsBaseTranslateXY()
-
     tileTranslate = np.zeros((res[0], res[1], 3), dtype='float32')
     for i in range(0, res[0]):
         for j in range(0, res[1]):
-            tileTranslate[i,j,0:2] = examplarTranslate(examplars_aabb[C[i,j,0]][:,0:2], examplar_res, C[i,j,1:3]) + base[C[i,j,0]]
+            tileTranslate[i,j,0:2] = examplarTranslate(examplars_aabb[C[i,j,0]][:,0:2], examplar_res, C[i,j,1:3])
             tileTranslate[i,j,2] = examplars_tz[C[i,j,0]]
 
 #    print 'set spectrum maps and generate tile spectrum map ..'

@@ -1,4 +1,5 @@
 import numpy as np
+from utils import generateSatinSimple
 
 
 def loadExamplarsPattern():
@@ -7,47 +8,53 @@ def loadExamplarsPattern():
     h = 5
     S = np.zeros((N, h, w), dtype=np.bool)
 
-    S[0] = S[1] = S[2] = S[3] = False
-    for i in range(0, h):
-        for j in range(0, w):
-            # twill D1
-            if not (i + j == 4):
-                S[0, i, j] = True
-
-            # twill E1
-            if i + j < 3 or (i + j > 4 and i + j < 8):
-                S[1, i, j] = True
-
-            # twill F1
-            if i + j < 2 or (i + j > 4 and i + j < 7):
-                S[2, i, j] = True
-
-            # twill G1
-            if i + j == 4:
-                S[3, i, j] = True
+    # twill D1
+    S[0] = True
+    starts = [(1, 0), (0, 4)]
+    offset = [1, 1]
+    generateSatinSimple(S[0], starts, offset, False)
+    
+    # twill E1
+    S[1] = True
+    starts = [(0, 0), (1, 0), (0, 4)]
+    offset = [1, 1]
+    generateSatinSimple(S[1], starts, offset, False) 
+    
+    # twill F1
+    S[2] = True
+    starts = [(0, 0), (1, 0), (0, 1), (0, 4), (4, 0)]
+    offset = [1, 1]
+    generateSatinSimple(S[2], starts, offset, False)
+    
+    # twill G1
+    S[3] = False
+    starts = [(0, 0)]
+    offset = [1, 1]
+    generateSatinSimple(S[3], starts, offset, True)
     
     # satin A2
     S[4] = True
-    E = S[4]
-    E[0, 2] = E[1, 4] = E[2, 1] = E[3, 3] = E[4, 0] = False
-
+    starts = [(0, 4), (1, 1), (3, 0)]
+    offset = [1, 2]
+    generateSatinSimple(S[4], starts, offset, False)
+    
     # satin E2
     S[5] = True
     E = S[5]
-    E[0, 1] = E[0, 2] = E[1, 3] = E[1, 4] = E[2, 0] = E[2, 1] = False
-    E[3, 2] = E[3, 3] = E[4, 0] = E[4, 4] = False
-
+    E[0, 0] = E[0, 4] = E[1, 1] = E[1, 2] = E[2, 3] = E[2, 4] = False
+    E[3, 0] = E[3, 1] = E[4, 2] = E[4, 3] = False
+    
     # satin F2
     S[6] = False
-    E = S[6]
+    E= S[6]
     E[0, 3] = E[0, 4] = E[1, 0] = E[1, 1] = E[2, 2] = E[2, 3] = True
     E[3, 0] = E[3, 4] = E[4, 1] = E[4, 2] = True
-
+    
     # satin G2
     S[7] = False
     E = S[7]
-    E[0, 2] = E[1, 4] = E[2, 1] = E[3, 3] = E[4, 0] = True
-
+    E[0, 4] = E[1, 1] = E[2, 3] = E[3, 0] = E[4, 2] = True
+  
     return S
 
 
@@ -89,15 +96,15 @@ def loadExamplarsAABB():
     return aabb
 
 
-def loadExamplarsBaseTranslateXY():
-    xy = np.zeros((8, 2), dtype="float32")
-    xy[0] = [0.019781, 0.0]
-    xy[1] = [0.019751, 0.0]
-    xy[2] = [0.019759, 0.0]
-    xy[3] = [0.019716, 0.0]
-    xy[4] = xy[5] = xy[6] = xy[7] = [0.0, 0.0]  # satin
-
-    return xy
+#def loadExamplarsBaseTranslateXY():
+#    xy = np.zeros((8, 2), dtype="float32")
+#    xy[0] = [0.019781, 0.0]
+#    xy[1] = [0.019751, 0.0]
+#    xy[2] = [0.019759, 0.0]
+#    xy[3] = [0.019716, 0.0]
+#    xy[4] = xy[5] = xy[6] = xy[7] = [0.0, 0.0]  # satin
+#
+#    return xy
 
 
 def loadExamplarsTranslateZSimple():
